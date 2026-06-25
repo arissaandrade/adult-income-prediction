@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adult Income Prediction (>50K)</title>
+  <style>
+    :root{
+      --primary:#0A66C2; --primary-2:#2B81E0; --bg:#F4F7FC; --card:#FFFFFF; --border:#D7DFEA;
+      --text:#0F172A; --muted:#6B7280; --shadow:0 10px 28px rgba(7,76,180,.12);
+      --field-h:48px; --radius:12px;
+    }
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    body{margin:0;background:var(--bg);color:var(--text)}
+    .container{max-width:980px;margin:56px auto;padding:0 20px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px}
+    h1{margin:0 0 8px;font-size:32px;line-height:1.15;font-weight:800;color:var(--primary);text-align:center}
+    p.subtitle{margin:0 0 28px;text-align:center;color:var(--muted);font-size:15px}
+    .section{margin:18px 0 8px;font-weight:800;color:#0A66C2}
+    form{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+    .field{display:flex;flex-direction:column}
+    label{font-size:14px;font-weight:700;margin:6px 0 8px}
+    input,select{
+      height:var(--field-h);padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;
+      font-size:15px;transition:border-color .15s, box-shadow .15s;width:100%;
+    }
+    input:focus,select:focus{outline:none;border-color:var(--primary-2);box-shadow:0 0 0 3px rgba(43,129,224,.18)}
+    .helper{font-size:12px;color:var(--muted);margin-top:6px}
+    .actions{grid-column:1/-1;display:flex;justify-content:center;gap:14px;margin-top:6px}
+    .btn{
+      height:var(--field-h);padding:0 24px;border-radius:10px;border:1px solid transparent;cursor:pointer;
+      font-weight:800;font-size:15px;transition:filter .15s, transform .04s;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn-reset{background:#fff;border:1px solid var(--border);color:var(--text)}
+    .btn-primary{background:linear-gradient(90deg,var(--primary),var(--primary-2));color:#fff;box-shadow:0 6px 18px rgba(10,102,194,.24)}
+    .btn-primary:hover{filter:brightness(1.02)}
+    footer{margin:20px 0 0;text-align:center;color:var(--muted);font-size:13px}
+    .full{grid-column:1/-1}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Adult Income Prediction (&gt;50K)</h1>
+      <p class="subtitle">Provide the following 10 features from the UCI Adult dataset.</p>
+
+      <div class="section">Applicant (Numeric)</div>
+      <form method="POST" action="/predict">
+        <div class="field">
+          <label for="age">Age (years)</label>
+          <input type="number" id="age" name="age" step="1" min="17" max="100" placeholder="e.g., 39" required>
+          <div class="helper">Column: <code>age</code></div>
+        </div>
+
+        <div class="field">
+          <label for="education_num">Education (years coded)</label>
+          <input type="number" id="education_num" name="education_num" step="1" min="1" max="16" placeholder="e.g., 13" required>
+          <div class="helper">Column: <code>education_num</code></div>
+        </div>
+
+        <div class="field">
+          <label for="hours_per_week">Hours per Week</label>
+          <input type="number" id="hours_per_week" name="hours_per_week" step="1" min="1" max="99" placeholder="e.g., 40" required>
+          <div class="helper">Column: <code>hours_per_week</code></div>
+        </div>
+
+        <div class="field">
+          <label for="capital_gain">Capital Gain (USD)</label>
+          <input type="number" id="capital_gain" name="capital_gain" step="1" min="0" placeholder="e.g., 0" required>
+          <div class="helper">Column: <code>capital_gain</code></div>
+        </div>
+
+        <div class="field">
+          <label for="capital_loss">Capital Loss (USD)</label>
+          <input type="number" id="capital_loss" name="capital_loss" step="1" min="0" placeholder="e.g., 0" required>
+          <div class="helper">Column: <code>capital_loss</code></div>
+        </div>
+
+        <div class="section full">Applicant (Categorical)</div>
+
+        <div class="field">
+          <label for="sex">Sex</label>
+          <select id="sex" name="sex" required>
+            <option value="">Select…</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+          <div class="helper">Column: <code>sex</code></div>
+        </div>
+
+        <div class="field">
+          <label for="workclass">Workclass</label>
+          <select id="workclass" name="workclass" required>
+            <option value="">Select…</option>
+            <option>Private</option>
+            <option>Self-emp-not-inc</option>
+            <option>Self-emp-inc</option>
+            <option>Federal-gov</option>
+            <option>Local-gov</option>
+            <option>State-gov</option>
+            <option>Without-pay</option>
+            <option>Never-worked</option>
+          </select>
+          <div class="helper">Column: <code>workclass</code></div>
+        </div>
+
+        <div class="field">
+          <label for="education">Education</label>
+          <select id="education" name="education" required>
+            <option value="">Select…</option>
+            <option>Preschool</option>
+            <option>1st-4th</option>
+            <option>5th-6th</option>
+            <option>7th-8th</option>
+            <option>9th</option>
+            <option>10th</option>
+            <option>11th</option>
+            <option>12th</option>
+            <option>HS-grad</option>
+            <option>Some-college</option>
+            <option>Assoc-voc</option>
+            <option>Assoc-acdm</option>
+            <option>Bachelors</option>
+            <option>Masters</option>
+            <option>Prof-school</option>
+            <option>Doctorate</option>
+          </select>
+          <div class="helper">Column: <code>education</code></div>
+        </div>
+
+        <div class="field">
+          <label for="marital_status">Marital Status</label>
+          <select id="marital_status" name="marital_status" required>
+            <option value="">Select…</option>
+            <option>Married-civ-spouse</option>
+            <option>Married-spouse-absent</option>
+            <option>Married-AF-spouse</option>
+            <option>Never-married</option>
+            <option>Divorced</option>
+            <option>Separated</option>
+            <option>Widowed</option>
+          </select>
+          <div class="helper">Column: <code>marital_status</code></div>
+        </div>
+
+        <div class="field">
+          <label for="occupation">Occupation</label>
+          <select id="occupation" name="occupation" required>
+            <option value="">Select…</option>
+            <option>Tech-support</option>
+            <option>Craft-repair</option>
+            <option>Other-service</option>
+            <option>Sales</option>
+            <option>Exec-managerial</option>
+            <option>Prof-specialty</option>
+            <option>Handlers-cleaners</option>
+            <option>Machine-op-inspct</option>
+            <option>Adm-clerical</option>
+            <option>Farming-fishing</option>
+            <option>Transport-moving</option>
+            <option>Priv-house-serv</option>
+            <option>Protective-serv</option>
+            <option>Armed-Forces</option>
+          </select>
+          <div class="helper">Column: <code>occupation</code></div>
+        </div>
+
+        <div class="actions full">
+          <button type="reset" class="btn btn-reset">Reset</button>
+          <button type="submit" class="btn btn-primary">Predict Income &gt;50K</button>
+        </div>
+      </form>
+    </div>
+    <footer>© 2025 • Adult Income Intelligence</footer>
+  </div>
+</body>
+</html>
